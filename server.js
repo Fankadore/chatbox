@@ -1,22 +1,15 @@
 "use strict";
 
-const express = require('express');
-const app = express();
+const app = require('express')();
+const port = process.env.PORT || 2000;
+const server = require('http').createServer(app).listen(port, () => console.log("Listening on port " + port));
+const io = require('socket.io')(server);
 
-app.get('/', function(req, res) {
+io.sockets.on('connection', function(socket){
+    console.log("connection");
+    socket.emit('connect', {message: "connected"});
+ });
+
+ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
-});
-
-let userId = 999999;
-
-app.get('/login/:userId(\\d{6})', function(req, res) {
-    userId = req.params.userId;
-    res.send(userId + " has logged on.");
-});
-
-const server = app.listen(2000, function() {
-    let host = server.address().address;
-    let port = server.address().port;
-    
-    console.log("Server listening at " + host + ":" + port);
-});
+ });
