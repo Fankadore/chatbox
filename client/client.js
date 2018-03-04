@@ -1,9 +1,9 @@
 "use strict";
 
-let chatBox = document.querySelector('#chat-box');
-let input = document.querySelector('#chat-input');
-let sendButton = document.querySelector('#chat-send');
-let clearButton = document.querySelector('#chat-clear');
+let chatBox = document.querySelector('.chat-box');
+let input = document.querySelector('.chat-input');
+let sendButton = document.querySelector('.chat-send');
+let clearButton = document.querySelector('.chat-clear');
 input.focus();
 
 const socket = io.connect();
@@ -31,14 +31,14 @@ function submitChat() {
 
 socket.on('chatDisplay', function(data) {
     let message = data.message;
-    if (data.id >= 0 || data.id === 'server') {
-        message = data.id + ": " + message;
+    if (data.id >= 0) {
+        message = "Chatter " + data.id + ": " + message;
     }
     displayChat(message);
 });
 
 function displayChat(message) {
-    chatBox.innerHTML += "<p>" + message + "</p>";
+    chatBox.innerHTML += '<p class="message style-' + style + '">' + message + '</p>';
     console.log(message);
 }
 
@@ -48,6 +48,20 @@ clearButton.onclick = function() {
 };
 
 function clearChatbox() {
-    chatBox.innerHTML = "Chatbox cleared.";
+    chatBox.innerHTML = '<p class="message style-' + style + '">Chatbox cleared.</p>';
     console.log("Chatbox cleared.");
+}
+
+let style = 0;
+function toggleStyle() {
+    let previousStyle = style;
+    style++;
+    if (style > 3) {
+        style = 0;
+    }
+    let elements = document.querySelectorAll('.style-' + previousStyle);
+    elements.forEach(function(element) {
+        element.classList.remove('style-' + previousStyle);
+        element.classList.add('style-' + style);
+    });
 }

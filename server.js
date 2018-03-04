@@ -21,7 +21,7 @@ io.sockets.on('connection', function(socket) {
     clients[socket.id] = socket;
     console.log("Client connected with Id: " + socket.id);
     socket.emit('login', {id: socket.id});
-    socket.emit('chatDisplay', {id: 'server', message: "Hello World!"});
+    socket.emit('chatDisplay', {id: 'server', message: "Welcome to Chatbox!"});
 
     socket.on('chatSubmit', function(data) {
         if (data.message) {
