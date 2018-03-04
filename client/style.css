@@ -1,0 +1,22 @@
+p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #000000;
+}
+
+#chat-box {
+    background-color: #ffffff;
+    height: 350px;
+}
+
+.btn {
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 20px;
+    background: #d40707;
+    padding: 10px 15px 10px 15px;
+  }
+  
+  .btn:hover {
+    background: #d63e3e;
+  }

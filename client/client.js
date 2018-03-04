@@ -4,19 +4,28 @@ let chatBox = document.querySelector('#chat-box');
 let input = document.querySelector('#chat-input');
 let sendButton = document.querySelector('#chat-send');
 let clearButton = document.querySelector('#chat-clear');
+input.focus();
 
 const socket = io.connect();
 socket.on('login', function(data) {
     console.log("You have been assigned Id: " + data.id);
 });
 
+
 sendButton.onclick = function() {
-    submitChat(input.value);
-    input.value = "";
+    submitChat();
 };
 
-function submitChat(message) {
-    socket.emit('chatSubmit', {message: message});
+input.addEventListener("keydown", function(e) {
+    if (e.keyCode === 13) {
+        submitChat();
+    }
+});
+
+function submitChat() {
+    socket.emit('chatSubmit', {message: input.value});
+    input.value = "";
+    input.focus();
 }
 
 
@@ -39,6 +48,6 @@ clearButton.onclick = function() {
 };
 
 function clearChatbox() {
-    chatBox.innerHTML = "";
+    chatBox.innerHTML = "Chatbox cleared.";
     console.log("Chatbox cleared.");
 }
