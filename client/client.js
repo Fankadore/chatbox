@@ -26,6 +26,7 @@ function submitChat() {
     socket.emit('chatSubmit', {message: input.value});
     input.value = "";
     input.focus();
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
 
@@ -38,7 +39,7 @@ socket.on('chatDisplay', function(data) {
 });
 
 function displayChat(message) {
-    chatBox.innerHTML += '<p class="message style-' + style + '">' + message + '</p>';
+    chatBox.innerHTML += '<li class="message style-' + style + ' chat-style-' + chatStyle + '">' + message + '</li>';
     console.log(message);
 }
 
@@ -48,11 +49,13 @@ clearButton.onclick = function() {
 };
 
 function clearChatbox() {
-    chatBox.innerHTML = '<p class="message style-' + style + '">Chatbox cleared.</p>';
+    chatBox.innerHTML = '<li class="message style-' + style + ' chat-style-' + chatStyle + '">Chatbox cleared.</li>';
+    input.focus();
     console.log("Chatbox cleared.");
 }
 
 let style = 0;
+let chatStyle = 0;
 function toggleStyle() {
     let previousStyle = style;
     style++;
@@ -63,5 +66,17 @@ function toggleStyle() {
     elements.forEach(function(element) {
         element.classList.remove('style-' + previousStyle);
         element.classList.add('style-' + style);
+    });
+}
+function toggleChatStyle() {
+    let previousChatStyle = chatStyle;
+    chatStyle++;
+    if (chatStyle > 3) {
+        chatStyle = 0;
+    }
+    let elements = document.querySelectorAll('.chat-style-' + previousChatStyle);
+    elements.forEach(function(element) {
+        element.classList.remove('chat-style-' + previousChatStyle);
+        element.classList.add('chat-style-' + chatStyle);
     });
 }

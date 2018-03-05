@@ -1,5 +1,14 @@
 "use strict";
 
+// MongoDB - store user accounts
+const mongoose = require('mongoose');
+const userSchema = mongoose.Schema({
+    username: String,
+    email: String,
+    hash: String,
+    salt: String
+});
+
 // Express Routing - resolves HTTP requests
 const express = require('express');
 const app = express();
